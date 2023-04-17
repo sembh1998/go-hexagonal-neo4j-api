@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/sembh1998/go-hexagonal-api/cmd/api/bootstrap"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/cmd/api/bootstrap"
 )
 
 func main() {

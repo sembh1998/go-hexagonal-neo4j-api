@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"github.com/sembh1998/go-hexagonal-api/internal/platform/server"
-	neo4jimpl "github.com/sembh1998/go-hexagonal-api/internal/platform/storage/neo4j"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server"
+	neo4jimpl "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/storage/neo4j"
 )
 
 const (

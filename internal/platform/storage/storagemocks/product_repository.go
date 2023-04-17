@@ -5,7 +5,7 @@ package platform
 import (
 	context "context"
 
-	internalplatform "github.com/sembh1998/go-hexagonal-api/internal/platform"
+	internalplatform "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -2,9 +2,10 @@ package neo4j
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	mooc "github.com/sembh1998/go-hexagonal-api/internal/platform"
+	mooc "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform"
 )
 
 type ProductRepository struct {
@@ -42,7 +43,7 @@ func (r *ProductRepository) Save(ctx context.Context, product *mooc.Product) err
 	// Execute the cypher query
 	_, err := session.Run(ctx, cypher, mapparams)
 	if err != nil {
-		return err
+		return fmt.Errorf("error saving product: %w", err)
 	}
 
 	return nil

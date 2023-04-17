@@ -1,4 +1,4 @@
-module github.com/sembh1998/go-hexagonal-api
+module github.com/sembh1998/go-hexagonal-neo4j-api
 
 go 1.20
 

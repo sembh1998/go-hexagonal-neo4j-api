@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	mooc "github.com/sembh1998/go-hexagonal-api/internal/platform"
+	mooc "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform"
 )
 
 type createRequest struct {

@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	mooc "github.com/sembh1998/go-hexagonal-api/internal/platform"
-	"github.com/sembh1998/go-hexagonal-api/internal/platform/server/handler/products"
-	status "github.com/sembh1998/go-hexagonal-api/internal/platform/server/handler/status"
+	mooc "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server/handler/products"
+	status "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server/handler/status"
 )
 
 type Server struct {

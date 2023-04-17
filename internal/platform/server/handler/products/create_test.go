@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	storagemocks "github.com/sembh1998/go-hexagonal-api/internal/platform/storage/storagemocks"
+	storagemocks "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/storage/storagemocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
