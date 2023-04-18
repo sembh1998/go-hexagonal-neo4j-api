@@ -33,15 +33,13 @@ func (r *ProductRepository) Save(ctx context.Context, product *mooc.Product) err
 	}
 
 	// Define the cypher query to save the product
-	cypher := `
-		CREATE (p:Product {id: $id, name: $name, price: $price, bar_code: $bar_code, img_url: $img_url})
-		RETURN p AS product
-	`
+	cypher := `CREATE (p:` + graphProductNodeLabel + ` {id: $id, name: $name, price: $price, bar_code: $bar_code, img_url: $img_url})`
 	// convert the product to a map with json tags
 	mapparams := structToMap(prod)
 
 	// Execute the cypher query
 	_, err := session.Run(ctx, cypher, mapparams)
+
 	if err != nil {
 		return fmt.Errorf("error saving product: %w", err)
 	}

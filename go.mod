@@ -7,6 +7,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/neo4j/neo4j-go-driver/v5 v5.6.0
 	github.com/stretchr/testify v1.8.1
+	syreclabs.com/go/faker v1.2.3
 )
 
 require (
