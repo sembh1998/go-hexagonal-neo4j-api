@@ -126,7 +126,7 @@ type ProductRepository interface {
 	// DeleteByID deletes the product with the given ID.
 	DeleteByID(ctx context.Context, id string) error
 	// UpdateByID updates the product with the given ID.
-	UpdateByID(ctx context.Context, id string, product *Product) error
+	UpdateByID(ctx context.Context, product *Product) error
 }
 
 // go:generate mockery --case snake --outpkg storagemocks --output ./storage/storagemocks --name ProductRepository

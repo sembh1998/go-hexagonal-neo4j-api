@@ -94,13 +94,13 @@ func (_m *ProductRepository) Save(ctx context.Context, product *internalplatform
 	return r0
 }
 
-// UpdateByID provides a mock function with given fields: ctx, id, product
-func (_m *ProductRepository) UpdateByID(ctx context.Context, id string, product *internalplatform.Product) error {
-	ret := _m.Called(ctx, id, product)
+// UpdateByID provides a mock function with given fields: ctx, product
+func (_m *ProductRepository) UpdateByID(ctx context.Context, product *internalplatform.Product) error {
+	ret := _m.Called(ctx, product)
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, *internalplatform.Product) error); ok {
-		r0 = rf(ctx, id, product)
+	if rf, ok := ret.Get(0).(func(context.Context, *internalplatform.Product) error); ok {
+		r0 = rf(ctx, product)
 	} else {
 		r0 = ret.Error(0)
 	}
