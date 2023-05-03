@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/creating"
 	storagemocks "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/storage/storagemocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -17,11 +18,12 @@ import (
 func TestHandler_Create(t *testing.T) {
 	productRepository := new(storagemocks.ProductRepository)
 	productRepository.On("Save", mock.Anything, mock.AnythingOfType("*platform.Product")).Return(nil).Once()
+	productService := creating.NewProductService(productRepository)
 
 	gin.SetMode(gin.TestMode)
 
 	r := gin.New()
-	r.POST("/products", CreateHandler(productRepository))
+	r.POST("/products", CreateHandler(productService))
 
 	t.Run("should return 400 when the request body is invalid", func(t *testing.T) {
 		// Arrange

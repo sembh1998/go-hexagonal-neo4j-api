@@ -1,10 +1,11 @@
 package products
 
 import (
-	"log"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/creating"
 	mooc "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform"
 )
 
@@ -16,7 +17,7 @@ type createRequest struct {
 	Price   int    `json:"price" binding:"required"`
 }
 
-func CreateHandler(productRepository mooc.ProductRepository) gin.HandlerFunc {
+func CreateHandler(creatingProductService *creating.ProductService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var req createRequest
 		if err := c.ShouldBindJSON(&req); err != nil {
@@ -24,20 +25,22 @@ func CreateHandler(productRepository mooc.ProductRepository) gin.HandlerFunc {
 			return
 		}
 
-		product, err := mooc.NewProduct(req.ID, req.Name, req.Price, req.BarCode, req.ImgUrl)
+		err := creatingProductService.CreateProduct(c, req.ID, req.Name, req.Price, req.BarCode, req.ImgUrl)
 		if err != nil {
-			log.Println(err.Error())
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
+			switch {
+			case errors.Is(err, mooc.ErrInvalidProductID),
+				errors.Is(err, mooc.ErrInvalidProductName),
+				errors.Is(err, mooc.ErrInvalidProductPrice),
+				errors.Is(err, mooc.ErrInvalidProductBarCode),
+				errors.Is(err, mooc.ErrInvalidProductImgUrl):
+				c.JSON(http.StatusBadRequest, err.Error())
+				return
+			default:
+				c.JSON(http.StatusInternalServerError, err.Error())
+				return
+			}
 		}
 
-		if err := productRepository.Save(c, product); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		c.JSON(http.StatusCreated, gin.H{
-			"message": "OK",
-		})
+		c.Status(http.StatusCreated)
 	}
 }

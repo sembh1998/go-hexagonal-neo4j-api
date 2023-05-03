@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/creating"
 	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server"
 	neo4jimpl "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/storage/neo4j"
 )
@@ -32,6 +33,7 @@ func Run() error {
 	defer session.Close(context.Background())
 
 	productRepository := neo4jimpl.NewProductRepository(neo4jDriver)
+	productService := creating.NewProductService(productRepository)
 
 	srv := server.New(host, port, productRepository)
 	return srv.Run()
