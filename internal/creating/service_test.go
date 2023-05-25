@@ -20,8 +20,7 @@ func Test_ProductService_CreateProduct_RepositoryError(t *testing.T) {
 	prodPrice := faker.Number().NumberInt(4)
 	prodBarCode := faker.Code().Ean13()
 	prodImgUrl := faker.Avatar().Url("png", 520, 520)
-
-	product, err := mooc.NewProduct(prodID, prodName, prodPrice, prodBarCode, prodImgUrl)
+	product, err := mooc.NewProduct(prodID, prodName, prodBarCode, prodImgUrl, prodPrice)
 	require.NoError(t, err)
 
 	productRepository := new(storagemocks.ProductRepository)
@@ -29,7 +28,7 @@ func Test_ProductService_CreateProduct_RepositoryError(t *testing.T) {
 
 	productService := NewProductService(productRepository)
 
-	err = productService.CreateProduct(context.Background(), prodID, prodName, prodPrice, prodBarCode, prodImgUrl)
+	err = productService.CreateProduct(context.Background(), prodID, prodName, prodBarCode, prodImgUrl, prodPrice)
 
 	productRepository.AssertExpectations(t)
 	assert.Error(t, err)
@@ -42,7 +41,7 @@ func Test_ProductService_CreateProduct_Success(t *testing.T) {
 	prodBarCode := faker.Code().Ean13()
 	prodImgUrl := faker.Avatar().Url("png", 520, 520)
 
-	product, err := mooc.NewProduct(prodID, prodName, prodPrice, prodBarCode, prodImgUrl)
+	product, err := mooc.NewProduct(prodID, prodName, prodBarCode, prodImgUrl, prodPrice)
 	require.NoError(t, err)
 
 	productRepository := new(storagemocks.ProductRepository)
@@ -50,7 +49,7 @@ func Test_ProductService_CreateProduct_Success(t *testing.T) {
 
 	productService := NewProductService(productRepository)
 
-	err = productService.CreateProduct(context.Background(), prodID, prodName, prodPrice, prodBarCode, prodImgUrl)
+	err = productService.CreateProduct(context.Background(), prodID, prodName, prodBarCode, prodImgUrl, prodPrice)
 
 	productRepository.AssertExpectations(t)
 	assert.NoError(t, err)

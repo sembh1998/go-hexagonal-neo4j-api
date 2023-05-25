@@ -6,6 +6,7 @@ import (
 
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/creating"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/bus/inmemory"
 	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server"
 	neo4jimpl "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/storage/neo4j"
 )
@@ -32,9 +33,13 @@ func Run() error {
 	session := neo4jDriver.NewSession(context.Background(), neo4j.SessionConfig{AccessMode: neo4j.AccessModeWrite})
 	defer session.Close(context.Background())
 
+	var commandBus = inmemory.NewCommandBus()
+
 	productRepository := neo4jimpl.NewProductRepository(neo4jDriver)
 	productService := creating.NewProductService(productRepository)
+	createProductCommandHandler := creating.NewCreateProductCommandHandler(productService)
+	commandBus.Register(creating.ProductCreateCommandType, createProductCommandHandler)
 
-	srv := server.New(host, port, productRepository)
+	srv := server.New(host, port, commandBus)
 	return srv.Run()
 }

@@ -16,8 +16,8 @@ func NewProductService(prodRepo mooc.ProductRepository) *ProductService {
 	}
 }
 
-func (s *ProductService) CreateProduct(ctx context.Context, id, name string, price int, barcode, imgUrl string) error {
-	product, err := mooc.NewProduct(id, name, price, barcode, imgUrl)
+func (s *ProductService) CreateProduct(ctx context.Context, id, name, barcode, imgUrl string, price int) error {
+	product, err := mooc.NewProduct(id, name, barcode, imgUrl, price)
 	if err != nil {
 		return err
 	}

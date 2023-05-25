@@ -72,7 +72,7 @@ type Product struct {
 	ImgUrl  ProductImgUrl
 }
 
-func NewProduct(id, name string, price int, barCode, imgUrl string) (*Product, error) {
+func NewProduct(id, name, barCode, imgUrl string, price int) (*Product, error) {
 	Id, err := NewProductID(id)
 	if err != nil {
 		return nil, err

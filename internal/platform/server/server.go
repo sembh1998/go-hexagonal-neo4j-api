@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/creating"
 	"github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server/handler/products"
 	status "github.com/sembh1998/go-hexagonal-neo4j-api/internal/platform/server/handler/status"
+	"github.com/sembh1998/go-hexagonal-neo4j-api/kit/command"
 )
 
 type Server struct {
@@ -15,15 +15,15 @@ type Server struct {
 	// engine is the HTTP engine used to handle requests.
 	engine *gin.Engine
 
-	productService *creating.ProductService
+	commandBus command.Bus
 }
 
 // New returns a new Server.
-func New(host string, port uint, prodServ *creating.ProductService) *Server {
+func New(host string, port uint, commandBus command.Bus) *Server {
 	server := &Server{
-		httpAddr:       fmt.Sprintf("%s:%d", host, port),
-		engine:         gin.New(),
-		productService: prodServ,
+		httpAddr:   fmt.Sprintf("%s:%d", host, port),
+		engine:     gin.New(),
+		commandBus: commandBus,
 	}
 
 	server.engine.Use(gin.Recovery())
@@ -41,5 +41,5 @@ func (s *Server) Run() error {
 // registerRoutes registers the routes for the server.
 func (s *Server) registerRoutes() {
 	s.engine.GET("/status", status.StatusHandler())
-	s.engine.POST("/products", products.CreateHandler(s.productService))
+	s.engine.POST("/products", products.CreateHandler(s.commandBus))
 }
